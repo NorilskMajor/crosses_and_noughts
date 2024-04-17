@@ -35,7 +35,7 @@ Players turn(var currentPlayer, List<List<Square>> field) {
   return currentPlayer;
 }
 
-//чета исправил
+
 //bool checkInput(String input){
 //    while (input == null){
 //        print('Введите координаты квадрата: ');
