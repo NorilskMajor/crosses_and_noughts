@@ -24,7 +24,7 @@ Players turn(var currentPlayer, List<List<Square>> field) {
   var inputCoords = stdin.readLineSync();
 
   var x = int.parse(inputCoords![0]);
-  var y = int.parse(inputCoords![2]);
+  var y = int.parse(inputCoords[2]);
   (currentPlayer == Players.first)
       ? field[x][y].content = Figures.cross
       : field[x][y].content = Figures.nought;
