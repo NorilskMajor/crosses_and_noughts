@@ -24,7 +24,7 @@ Players turn(var currentPlayer, List<List<Square>> field) {
   var inputCoords = stdin.readLineSync();
 
   var x = int.parse(inputCoords![0]);
-  var y = int.parse(inputCoords![2]);
+  var y = int.parse(inputCoords[2]);
   (currentPlayer == Players.first)
       ? field[x][y].content = Figures.cross
       : field[x][y].content = Figures.nought;
@@ -35,6 +35,7 @@ Players turn(var currentPlayer, List<List<Square>> field) {
   return currentPlayer;
 }
 
+//чета исправил
 //bool checkInput(String input){
 //    while (input == null){
 //        print('Введите координаты квадрата: ');
