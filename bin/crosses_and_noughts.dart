@@ -10,12 +10,8 @@ void main() {
     turn(currentPlayer, gameField);
     currentPlayer = playerChange(currentPlayer);
   } while (!isWon(gameField) || !isDraw(gameField));
-    turn(currentPlayer, gameField);
-    currentPlayer = playerChange(currentPlayer);
-  } while (!isWon(gameField) || !isDraw(gameField));
 
   if (isWon(gameField)) {
-    currentPlayer = playerChange(currentPlayer);
     currentPlayer = playerChange(currentPlayer);
     print('Игрок $currentPlayer победил');
   } else {
@@ -65,8 +61,6 @@ void turn(var currentPlayer, List<List<Square>> field) {
 
 
 //Метод drawField отрисовывает игровое поле
-
-//Метод drawField отрисовывает игровое поле
 void drawField(List<List<Square>> field) {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -77,7 +71,6 @@ void drawField(List<List<Square>> field) {
 }
 
 //Метод isWon проверяет условия победы
-//Метод isWon проверяет условия победы
 bool isWon(List<List<Square>> field) {
   if ((field[0][0].content == field[0][1].content) &&
       (field[0][0].content == field[0][2].content) &&
@@ -86,13 +79,11 @@ bool isWon(List<List<Square>> field) {
   }
 
 
-
   if ((field[0][0].content == field[1][0].content) &&
       (field[0][0].content == field[2][0].content) &&
       (field[0][0].content != Figures.empty)) {
     return true;
   }
- 
  
 
   if ((field[1][0].content == field[1][1].content) &&
@@ -101,14 +92,12 @@ bool isWon(List<List<Square>> field) {
     return true;
   }
  
- 
 
   if ((field[2][0].content == field[2][1].content) &&
       (field[2][0].content == field[2][2].content) &&
       (field[2][0].content != Figures.empty)) {
     return true;
   }
-  
   
 
   if ((field[0][0].content == field[1][1].content) &&
@@ -117,7 +106,6 @@ bool isWon(List<List<Square>> field) {
     return true;
   }
   
-  
 
   if ((field[2][0].content == field[1][1].content) &&
       (field[2][0].content == field[0][2].content) &&
@@ -125,13 +113,10 @@ bool isWon(List<List<Square>> field) {
     return true;
   }
   
-  
 
   return false;
 }
 
-
-//Метод isDraw проверяет условия ничьи
 
 //Метод isDraw проверяет условия ничьи
 bool isDraw(List<List<Square>> field) {
