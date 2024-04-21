@@ -49,11 +49,6 @@ bool isCorrect(int x, int y, List<List<Square>> field) {
   return true;
 }
 
-Map<int, int> coordTranslate = {
-  1: 0,
-  2: 1,
-  3: 2,
-};
 
 //Метод drawField отрисовывает игровое поле
 void drawField(List<List<Square>> field) {
