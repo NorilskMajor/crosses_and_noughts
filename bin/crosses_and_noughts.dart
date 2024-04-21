@@ -7,42 +7,50 @@ void main() {
   drawField(gameField);
 
   do {
-    currentPlayer = turn(currentPlayer, gameField);
-    drawField(gameField);
-  } while (isWon(gameField) || isDraw(gameField));
+    turn(currentPlayer, gameField);
+    currentPlayer = playerChange(currentPlayer);
+  } while (!isWon(gameField) && !isDraw(gameField));
 
   if (isWon(gameField)) {
-    print('Игрок $currentPlayer победил');
+    currentPlayer = playerChange(currentPlayer);
+    print('Игрок ${currentPlayer.ruLocalization} победил');
   } else {
     print('Ничья');
   }
 }
 
-Players turn(var currentPlayer, List<List<Square>> field) {
-  print('Ходит $currentPlayer игрок.');
-  print('Введите координаты квадрата: ');
-  var inputCoords = stdin.readLineSync();
-
-  var x = int.parse(inputCoords![0]);
-  var y = int.parse(inputCoords[2]);
-  (currentPlayer == Players.first)
-      ? field[x][y].content = Figures.cross
-      : field[x][y].content = Figures.nought;
+//Метод playerChange меняет игрока
+Players playerChange(Players currentPlayer) {
   (currentPlayer == Players.first)
       ? currentPlayer = Players.second
       : currentPlayer = Players.first;
-
   return currentPlayer;
 }
 
+//Метод turn добавляет крестик или нолик и отрисовывает игровое поле
+void turn(var currentPlayer, List<List<Square>> field) {
+  print('Ходит ${currentPlayer.ruLocalization} игрок.');
+  print('Введите координаты квадрата по горизонтали: ');
+  var x = int.parse(stdin.readLineSync() ?? '0');
+  print('Введите координаты квадрата по вертикали: ');
+  var y = int.parse(stdin.readLineSync() ?? '0');
 
-//bool checkInput(String input){
-//    while (input == null){
-//        print('Введите координаты квадрата: ');
-//        var input = stdin.readLineSync();
-//    }
-//}
+  (currentPlayer == Players.first)
+      ? field[x][y].content = Figures.cross
+      : field[x][y].content = Figures.nought;
+  drawField(field);
+}
 
+bool isCorrect(int x, int y, List<List<Square>> field) {
+  if (field[x][y].content != Figures.empty) {
+    print('Клетка занята');
+    return false;
+  }
+  return true;
+}
+
+
+//Метод drawField отрисовывает игровое поле
 void drawField(List<List<Square>> field) {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -52,70 +60,95 @@ void drawField(List<List<Square>> field) {
   }
 }
 
+//Метод isWon проверяет условия победы
 bool isWon(List<List<Square>> field) {
+//Верхняя строка
   if ((field[0][0].content == field[0][1].content) &&
       (field[0][0].content == field[0][2].content) &&
       (field[0][0].content != Figures.empty)) {
     return true;
   }
-  ;
 
+//Левый столбец
   if ((field[0][0].content == field[1][0].content) &&
       (field[0][0].content == field[2][0].content) &&
       (field[0][0].content != Figures.empty)) {
     return true;
   }
-  ;
 
+//Средняя строка
   if ((field[1][0].content == field[1][1].content) &&
       (field[1][0].content == field[1][2].content) &&
       (field[1][0].content != Figures.empty)) {
     return true;
   }
-  ;
 
+//Нижняя строка
   if ((field[2][0].content == field[2][1].content) &&
       (field[2][0].content == field[2][2].content) &&
       (field[2][0].content != Figures.empty)) {
     return true;
   }
-  ;
 
+//Левая горизонталь
   if ((field[0][0].content == field[1][1].content) &&
       (field[0][0].content == field[2][2].content) &&
       (field[0][0].content != Figures.empty)) {
     return true;
   }
-  ;
 
+//Правая горизонталь
   if ((field[2][0].content == field[1][1].content) &&
       (field[2][0].content == field[0][2].content) &&
       (field[2][0].content != Figures.empty)) {
     return true;
   }
-  ;
+
+//Средний столбец
+  if ((field[0][1].content == field[1][1].content) &&
+      (field[0][1].content == field[2][1].content) &&
+      (field[0][1].content != Figures.empty)) {
+    return true;
+  }
+
+//Правый столбец
+  if ((field[0][2].content == field[1][2].content) &&
+      (field[0][2].content == field[2][2].content) &&
+      (field[0][2].content != Figures.empty)) {
+    return true;
+  }
 
   return false;
 }
 
+//Метод isDraw проверяет условия ничьи
 bool isDraw(List<List<Square>> field) {
-  if (field.contains(Figures.empty)) {
-    return false;
-  } else {
-    return true;
+  for (int i = 0; i < field.length; i++) {
+    for (int j = 0; j < field.length; j++) {
+      if (field[i][j].content == Figures.empty) {
+        return false;
+      }
+    }
   }
+  return true;
 }
 
 enum Figures {
-  cross('✖'),
+  cross('❌'),
   nought('〇'),
-  empty('_');
+  empty('＿');
 
   const Figures(this.mark);
   final String mark;
 }
 
-enum Players { first, second }
+enum Players {
+  first('первый'),
+  second('второй');
+
+  const Players(this.ruLocalization);
+  final String ruLocalization;
+}
 
 class Square {
   Figures content;
